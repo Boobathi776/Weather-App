@@ -15,6 +15,7 @@ import WeatherPackage.WeatherGui;  // weather app gui and logic code package
 public class LogIn extends JFrame
 {
     public LogIn(){
+        super("LogIn");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
         setSize(450,650);
@@ -25,7 +26,7 @@ public class LogIn extends JFrame
     }
     private void addLoginComponents(){
 
-        JLabel loginBg= new JLabel(loadImage("Weather app java/src/asset/login1.jpg"));
+        JLabel loginBg= new JLabel(loadImage("Weather app java/src/asset/login.jpg"));
         loginBg.setBounds(0, 0,450 , 650);
         add(loginBg);
 
@@ -59,9 +60,14 @@ public class LogIn extends JFrame
         loginButton.setBounds(170, 340, 100, 30);
         loginBg.add(loginButton);
 
+        JButton signupButton = new JButton("Sign up");
+        signupButton.setBounds(170, 380, 100, 30);
+        loginBg.add(signupButton);
+
         JLabel errorLabel = new JLabel("");
-        errorLabel.setBounds(50, 200, 300, 30);
+        errorLabel.setBounds(50, 450, 300, 90);
         errorLabel.setForeground(Color.RED);
+        errorLabel.setFont(new Font("Dialog",Font.BOLD,15));
         errorLabel.setHorizontalAlignment(SwingConstants.CENTER);
         loginBg.add(errorLabel);
 
@@ -78,8 +84,17 @@ public class LogIn extends JFrame
                     System.out.println("hey i am in login page");
                      }
                     else {
-                    errorLabel.setText("Invalid username or password. Try again. or Create account");
+                    errorLabel.setText("<html>Invalid username or password. Try again.<br>, or Create account");
                 }
+            }
+        });
+
+
+        signupButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                new SignUp();
             }
         });
     }
