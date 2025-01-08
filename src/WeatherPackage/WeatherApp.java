@@ -20,7 +20,7 @@ public class WeatherApp {
         //get location coordinated using the geolocation API
         JSONArray locationData = getLocationData(locationName);
         if (locationData == null || locationData.isEmpty()) {
-            System.out.println("Error: Location data not found.");
+            System.out.println("Error: Location data not found. or Unable to connect to the server ");
             return null;
         }
 
@@ -33,7 +33,8 @@ public class WeatherApp {
         String urlString = "https://api.open-meteo.com/v1/forecast?"+
                 "latitude="+ latitude +"&longitude="+ longitude +
                 "&hourly=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m&timezone=Asia%2FSingapore";
-
+//        String urlString= "https://api.open-meteo.com/v1/forecast?latitude="+
+//                            latitude +" &longitude=+"+ longitude+"&hourly=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m";
         try
         {
             //call api and get the response
@@ -64,6 +65,7 @@ public class WeatherApp {
             //so we need to get the current hour index
             JSONArray time = (JSONArray) hourly.get("time");
             int index = findIndexOfCurerntTime(time);
+            System.out.println(index);
             //get temperature
             JSONArray temperatureData = (JSONArray) hourly.get("temperature_2m");
             double  temperature = (double) temperatureData.get(index);
@@ -93,13 +95,12 @@ public class WeatherApp {
             weatherData.put("weatherCondition",weatherCondition);
             weatherData.put("humidity",humidity);
             weatherData.put("windSpeed", windSpeed);
-
             return weatherData;
 
         }catch (Exception e)
         {
             System.out.println("something problem in putting data in the object");
-            e.printStackTrace();
+//            e.printStackTrace();
             return null;
         }
 
@@ -117,6 +118,8 @@ public class WeatherApp {
         //build API url with location parameter
         String urlString = "https://geocoding-api.open-meteo.com/v1/search?name="+
                           locationName + "&count=10&language=en&format=json";
+//        String urlString = "https://geocoding-api.open-meteo.com/v1/search?name="+
+//                            locationName+"&count=10&language=en&format=json";
         try
         {
             //call api and get the response
@@ -130,6 +133,7 @@ public class WeatherApp {
             else{
                 //store the API results
                 StringBuilder resultJson = new StringBuilder();
+                System.out.println("done 4");
                 Scanner scanner = new Scanner(conn.getInputStream());
                 //read and store the json  data into our Stringbuilder
                 while(scanner.hasNext())
@@ -152,8 +156,8 @@ public class WeatherApp {
 
         }catch(Exception e)
         {
-            System.out.println("ssomthing problem in getting location lattitutes and longtitutes");
-            e.printStackTrace();
+            System.out.println("Somthing problem in getting location lattitutes and longtitutes");
+//            e.printStackTrace();
             return null;
         }
 
@@ -164,14 +168,19 @@ public class WeatherApp {
         try{
             URL url= new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            System.out.println("done 1");
             conn.setRequestMethod("GET");
-
+            System.out.println("done 2");
+//            conn.setConnectTimeout(5000); // 5-second timeout for connection
+//            conn.setReadTimeout(5000);    // 5-second timeout for reading data
             //connect to our API
             conn.connect();
+            System.out.println("done 3");
             return conn;
         }catch (IOException e)
         {
-            e.printStackTrace();
+            System.out.println("unable to connect to the url given ");
+//            e.printStackTrace();
         }
         //if could not make a connention then
         return null;
@@ -228,7 +237,5 @@ public class WeatherApp {
         return weatherCondition;
 
     }
-
-
 
 }

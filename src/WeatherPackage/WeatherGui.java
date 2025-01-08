@@ -94,7 +94,9 @@ public class WeatherGui extends JFrame
                 //get location from the user
                 String userInput = searchtf.getText();
 //                validate text and remove whitespace to make like in the url format
-                if(userInput.replaceAll("\\s","").length()<=0d && userInput== null || userInput.trim().isEmpty())
+//                if(userInput.replaceAll("\\s","").length()<=0d && userInput== null || userInput.trim().isEmpty())
+//
+                if(userInput== null || userInput.trim().isEmpty())
                 {
                     return;
                 }
@@ -139,11 +141,11 @@ public class WeatherGui extends JFrame
 
         //update humidity text
         long humidity = (long) weatherData.get("humidity");
-        humidityText.setText("<html><b>Humidity<b><br>"+humidity + " %</html>");
+        humidityText.setText("<html><b>Humidity<b><br/>"+humidity + " %</html>");
 
         //update wind speed
         double windspeed = (double) weatherData.get("windSpeed");
-        windspeedText.setText("<html><b>WindSpeed<b><br> "+windspeed+ " km/h</html>");
+        windspeedText.setText("<html><b>WindSpeed<b><br/> "+windspeed+ " km/h</html>");
     }
 
     // used to create image for gui component button

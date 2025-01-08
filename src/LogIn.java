@@ -7,9 +7,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
-
 import DataBaseConnection.*;  // database connectivity package
-
 import DataBaseConnection.DbConnection;
 import WeatherPackage.WeatherGui;  // weather app gui and logic code package
 public class LogIn extends JFrame
@@ -81,14 +79,13 @@ public class LogIn extends JFrame
                 if (validateLogin(username, password)) {
                     dispose();   // Close login page and open weather application
                     new WeatherGui(username);
-                    System.out.println("hey i am in login page");
+                    System.out.println("hey i am in logged in to the app");
                      }
                     else {
                     errorLabel.setText("<html>Invalid username or password. Try again.<br>, or Create account");
                 }
             }
         });
-
 
         signupButton.addActionListener(new ActionListener() {
             @Override
@@ -114,10 +111,10 @@ public class LogIn extends JFrame
         }
         catch (SQLException | NullPointerException exe){
             System.out.println("some connection issue in sql ");
+
             return false;
         }
     }
-
 
     public ImageIcon loadImage(String path)
     {
@@ -131,6 +128,5 @@ public class LogIn extends JFrame
             return null;
         }
     }
-
 }
 
